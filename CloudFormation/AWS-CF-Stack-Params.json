@@ -1,0 +1,4 @@
+{
+ "FQDN": "v2.cprd.io",
+ "AcmCertificateArn": "arn:aws:acm:us-east-1:365315932105:certificate/50de0b5a-930b-49d0-8c3d-d0a584b2085b"
+}
