@@ -1,0 +1,16 @@
+version: 0.2
+
+env:
+  variables:
+    AcmCertificateArn: "arn:aws:acm:us-east-1:365315932105:certificate/50de0b5a-930b-49d0-8c3d-d0a584b2085b"
+    FQDN: "v2.cprd.io"
+
+phases:
+  install:
+    commands:
+      - aws cloudformation package --template-file CloudFormation/AWS-Serverless.yaml --s3-bucket bt-cdn-logs-dev --output-template-file AWS-Serverless-output.yaml
+artifacts:
+  type: zip
+  files:
+    - AWS-Serverless.yaml 
+    - AWS-Serverless-output.yaml

@@ -1,5 +1,4 @@
 AWSTemplateFormatVersion: 2010-09-09
-Transform: AWS::Serverless-2016-10-31
 Description: >-
   AWS Resources to deliver a static website via S3, CloudFront & Lambda@Edge
   (with EdgeServices)
@@ -99,7 +98,10 @@ Resources:
     Properties:
       Description: >-
         EdgeServices - A Pair of Lambda@Edge Functions for Executing Common Operations on Request (see https://github.com/ptylr/Lambda-at-Edge/tree/master/EdgeServices)
-      CodeUri: EdgeServices/OriginRequest
+      Code:
+        S3Bucket: lambda-ptylr-com
+        S3Key: EdgeServices_OriginRequest.zip
+        S3ObjectVersion: WUceMAAQDakBdZl5rhHY82MaozSA2pld
       Handler: handler.handler
       MemorySize: 128
       Role: !Sub '${LambdaFunctionExecutionRole.Arn}'
@@ -117,7 +119,10 @@ Resources:
     Properties:
       Description: >-
         EdgeServices - A Pair of Lambda@Edge Functions for Executing Common Operations on Request (see https://github.com/ptylr/Lambda-at-Edge/tree/master/EdgeServices)
-      CodeUri: EdgeServices/OriginResponse
+      Code:
+        S3Bucket: lambda-ptylr-com
+        S3Key: EdgeServices_OriginResponse.zip
+        S3ObjectVersion: fmArTnlFsUZyZYhZl6Sok4H7JK6aw42h
       Handler: handler.handler
       MemorySize: 128
       Role: !Sub '${LambdaFunctionExecutionRole.Arn}'
