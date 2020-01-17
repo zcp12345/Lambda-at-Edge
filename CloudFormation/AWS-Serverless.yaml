@@ -5,10 +5,12 @@ Description: >-
   (with EdgeServices)
 Parameters:
   FQDN:
-    Type: AWS::SSM::Parameter::Value<String>
+    Type: String
     Description: FQDN of website.
+    Default: replaceFQDN
   AcmCertificateArn:
-    Type: AWS::SSM::Parameter::Value<String>
+    Type: String
+    Default: replaceAcmCertificateArn
     Description: ARN of the certificate to use for the CloudFront distribution.
 Resources:
   CloudFrontDistribution:
@@ -16,7 +18,10 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - '{{resolve:ssm-secure:FQDN:1}}'
+          - !GetParam
+            - BuildArtifact
+            - AWS-CF-Stack-Params.json
+            - FQDN
         DefaultCacheBehavior:
           Compress: true
           ForwardedValues:
@@ -47,12 +52,18 @@ Resources:
                 !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
         PriceClass: PriceClass_All
         ViewerCertificate:
-                AcmCertificateArn: '{{resolve:ssm-secure:AcmCertificateArn:1}}'
+          AcmCertificateArn: !GetParam
+                              - BuildArtifact
+                              - AWS-CF-Stack-Params.json
+                              - AcmCertificateArn
           MinimumProtocolVersion: TLSv1.1_2016
           SslSupportMethod: sni-only
       Tags:
         - Key: Domain
-          Value: '{{resolve:ssm-secure:FQDN:1}}'
+          Value: !GetParam
+                  - BuildArtifact
+                  - AWS-CF-Stack-Params.json
+                  - FQDN
   CloudFrontOriginAccessIdentity:
     Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
     Properties:
@@ -68,7 +79,10 @@ Resources:
               SSEAlgorithm: AES256
       Tags:
         - Key: Domain
-          Value: '{{resolve:ssm-secure:FQDN:1}}'
+          Value: !GetParam
+                  - BuildArtifact
+                  - AWS-CF-Stack-Params.json
+                  - FQDN
   S3BucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
     Properties:
@@ -105,7 +119,10 @@ Resources:
       Runtime: nodejs10.x
       Tags:
         - Key: Domain
-          Value: '{{resolve:ssm-secure:FQDN:1}}'
+          Value: !GetParam
+                  - BuildArtifact
+                  - AWS-CF-Stack-Params.json
+                  - FQDN
   OriginRequestLambdaFunctionVersion:
     Type: 'AWS::Lambda::Version'
     Properties:
@@ -123,7 +140,10 @@ Resources:
       Runtime: nodejs10.x
       Tags:
         - Key: Domain
-          Value: '{{resolve:ssm-secure:FQDN:1}}'
+          Value: !GetParam
+                  - BuildArtifact
+                  - AWS-CF-Stack-Params.json
+                  - FQDN
   OriginResponseLambdaFunctionVersion:
     Type: 'AWS::Lambda::Version'
     Properties:

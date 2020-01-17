@@ -5,7 +5,6 @@ phases:
     commands:
       - aws cloudformation package --template-file CloudFormation/AWS-Serverless.yaml --s3-bucket bt-cdn-logs-dev --output-template-file AWS-Serverless-output.yaml
 artifacts:
-  name: cba
   files:
     - CloudFormation/AWS-CF-Stack-Params.json
     - AWS-Serverless-output.yaml
