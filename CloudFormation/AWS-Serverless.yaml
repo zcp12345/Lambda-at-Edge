@@ -4,13 +4,11 @@ Description: >-
   AWS Resources to deliver a static website via S3, CloudFront & Lambda@Edge
   (with EdgeServices)
 Parameters:
-  cfFQDN:
+  FQDN:
     Type: AWS::SSM::Parameter::Value<String>
-    Default: FQDN
     Description: FQDN of website.
-  cfAcmCertificateArn:
+  AcmCertificateArn:
     Type: AWS::SSM::Parameter::Value<String>
-    Default: AcmCertificateArn
     Description: ARN of the certificate to use for the CloudFront distribution.
 Resources:
   CloudFrontDistribution:
@@ -18,7 +16,7 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - !Ref cfFQDN
+          - !Ref FQDN
         DefaultCacheBehavior:
           Compress: true
           ForwardedValues:
@@ -49,12 +47,12 @@ Resources:
                 !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
         PriceClass: PriceClass_All
         ViewerCertificate:
-          AcmCertificateArn: !Ref cfAcmCertificateArn
+          AcmCertificateArn: !Ref AcmCertificateArn
           MinimumProtocolVersion: TLSv1.1_2016
           SslSupportMethod: sni-only
       Tags:
         - Key: Domain
-          Value: !Ref cfFQDN
+          Value: !Ref FQDN
   CloudFrontOriginAccessIdentity:
     Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
     Properties:
@@ -70,7 +68,7 @@ Resources:
               SSEAlgorithm: AES256
       Tags:
         - Key: Domain
-          Value: !Ref cfFQDN
+          Value: !Ref FQDN
   S3BucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
     Properties:
@@ -107,7 +105,7 @@ Resources:
       Runtime: nodejs10.x
       Tags:
         - Key: Domain
-          Value: !Ref cfFQDN
+          Value: !Ref FQDN
   OriginRequestLambdaFunctionVersion:
     Type: 'AWS::Lambda::Version'
     Properties:
@@ -125,7 +123,7 @@ Resources:
       Runtime: nodejs10.x
       Tags:
         - Key: Domain
-          Value: !Ref cfFQDN
+          Value: !Ref FQDN
   OriginResponseLambdaFunctionVersion:
     Type: 'AWS::Lambda::Version'
     Properties:
