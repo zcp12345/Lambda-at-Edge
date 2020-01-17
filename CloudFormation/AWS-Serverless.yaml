@@ -16,7 +16,7 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - !Ref FQDN
+          - '{{resolve:ssm-secure:FQDN:1}}'
         DefaultCacheBehavior:
           Compress: true
           ForwardedValues:
@@ -47,12 +47,12 @@ Resources:
                 !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
         PriceClass: PriceClass_All
         ViewerCertificate:
-          AcmCertificateArn: !Ref AcmCertificateArn
+                AcmCertificateArn: '{{resolve:ssm-secure:AcmCertificateArn:1}}'
           MinimumProtocolVersion: TLSv1.1_2016
           SslSupportMethod: sni-only
       Tags:
         - Key: Domain
-          Value: !Ref FQDN
+          Value: '{{resolve:ssm-secure:FQDN:1}}'
   CloudFrontOriginAccessIdentity:
     Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
     Properties:
@@ -68,7 +68,7 @@ Resources:
               SSEAlgorithm: AES256
       Tags:
         - Key: Domain
-          Value: !Ref FQDN
+          Value: '{{resolve:ssm-secure:FQDN:1}}'
   S3BucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
     Properties:
@@ -105,7 +105,7 @@ Resources:
       Runtime: nodejs10.x
       Tags:
         - Key: Domain
-          Value: !Ref FQDN
+          Value: '{{resolve:ssm-secure:FQDN:1}}'
   OriginRequestLambdaFunctionVersion:
     Type: 'AWS::Lambda::Version'
     Properties:
@@ -123,7 +123,7 @@ Resources:
       Runtime: nodejs10.x
       Tags:
         - Key: Domain
-          Value: !Ref FQDN
+          Value: '{{resolve:ssm-secure:FQDN:1}}'
   OriginResponseLambdaFunctionVersion:
     Type: 'AWS::Lambda::Version'
     Properties:
