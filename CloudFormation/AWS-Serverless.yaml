@@ -9,7 +9,8 @@ Parameters:
     Description: FQDN of website.
     Default: ptylr.com
   AcmCertificateArn:
-    Type: String
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: AcmCertificateArn
     Description: ARN of the certificate to use for the CloudFront distribution.
 Resources:
   CloudFrontDistribution:
@@ -48,9 +49,7 @@ Resources:
                 !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
         PriceClass: PriceClass_All
         ViewerCertificate:
-          AcmCertificateArn: !GetArtifactAtt
-                - AWS-CF-Stack-Params.json
-                - AcmCertificateArn
+          AcmCertificateArn: !Ref AcmCertificateArn
           MinimumProtocolVersion: TLSv1.1_2016
           SslSupportMethod: sni-only
       Tags:
