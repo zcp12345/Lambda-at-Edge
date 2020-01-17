@@ -11,6 +11,7 @@ phases:
       - aws cloudformation package --template-file CloudFormation/AWS-Serverless.yaml --s3-bucket bt-cdn-logs-dev --output-template-file AWS-Serverless-output.yaml
 artifacts:
   type: zip
+  name: cb_artifact
   files:
     - AWS-Serverless.yaml 
     - AWS-Serverless-output.yaml
