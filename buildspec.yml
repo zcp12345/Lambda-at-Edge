@@ -8,3 +8,4 @@ artifacts:
   name: cba
   files:
     - CloudFormation/AWS-CF-Stack-Params.json
+    - AWS-Serverless-output.yaml

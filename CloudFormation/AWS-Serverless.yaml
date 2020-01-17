@@ -17,7 +17,7 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - !GetArtifactAtt 'cba,FQDN'
+          - !GetParam 'cba,AWS-CF-Stack-Params.json,FQDN'
         DefaultCacheBehavior:
           Compress: true
           ForwardedValues:
@@ -48,12 +48,12 @@ Resources:
                 !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
         PriceClass: PriceClass_All
         ViewerCertificate:
-          AcmCertificateArn: !GetArtifactAtt 'cba,AcmCertificateArn'
+          AcmCertificateArn: !GetParam 'cba,AWS-CF-Stack-Params.json,AcmCertificateArn'
           MinimumProtocolVersion: TLSv1.1_2016
           SslSupportMethod: sni-only
       Tags:
         - Key: Domain
-          Value: !GetParam 'Kvq74Hm,AWS-CF-Stack-Params.json,FQDN'
+          Value: !GetParam 'cba,AWS-CF-Stack-Params.json,FQDN'
   CloudFrontOriginAccessIdentity:
     Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
     Properties:
@@ -69,7 +69,7 @@ Resources:
               SSEAlgorithm: AES256
       Tags:
         - Key: Domain
-          Value: !GetArtifactAtt 'cba,FQDN'
+          Value: !GetParam 'cba,AWS-CF-Stack-Params.json,FQDN'
   S3BucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
     Properties:
@@ -106,7 +106,7 @@ Resources:
       Runtime: nodejs10.x
       Tags:
         - Key: Domain
-          Value: !GetArtifactAtt 'cba,FQDN'
+          Value: !GetParam 'cba,AWS-CF-Stack-Params.json,FQDN'
   OriginRequestLambdaFunctionVersion:
     Type: 'AWS::Lambda::Version'
     Properties:
@@ -124,7 +124,7 @@ Resources:
       Runtime: nodejs10.x
       Tags:
         - Key: Domain
-          Value: !GetArtifactAtt 'cba,FQDN'
+          Value: !GetParam 'cba,AWS-CF-Stack-Params.json,FQDN'
   OriginResponseLambdaFunctionVersion:
     Type: 'AWS::Lambda::Version'
     Properties:
