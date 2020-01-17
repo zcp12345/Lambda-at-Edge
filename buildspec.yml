@@ -1,10 +1,10 @@
-version: 0.1
+version: 0.2
 
 phases:
-  install:
-    commands:
-      - aws cloudformation package --template-file CloudFormation/AWS-Serverless.yaml --s3-bucket bt-cdn-logs-dev --output-template-file AWS-Serverless-output.yaml
+ install:
+  commands:
+   - aws cloudformation package --template-file CloudFormation/AWS-Serverless.yaml --s3-bucket bt-cdn-logs-dev --output-template-file AWS-Serverless-output.yaml
 artifacts:
-  type: zip
-  files:
-    - AWS-Serverless-output.yaml
+ type: zip
+ files:
+  - AWS-Serverless-output.yaml
