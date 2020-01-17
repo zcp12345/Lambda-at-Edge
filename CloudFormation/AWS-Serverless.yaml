@@ -108,7 +108,7 @@ Resources:
         - Key: Domain
           Value: !Ref FQDN
   OriginRequestLambdaFunctionVersion:
-    Type: 'AWS::Serverless::Function'
+    Type: 'AWS::Lambda::Version'
     Properties:
       FunctionName: !Ref OriginRequestLambdaFunction
       Description: !Sub 'EdgeServices-OriginRequest for ${FQDN}'
@@ -126,7 +126,7 @@ Resources:
         - Key: Domain
           Value: !Ref FQDN
   OriginResponseLambdaFunctionVersion:
-    Type: 'AWS::Serverless::Function'
+    Type: 'AWS::Lambda::Version'
     Properties:
       FunctionName: !Ref OriginResponseLambdaFunction
       Description: !Sub 'EdgeServices-OriginResponse for ${FQDN}'
