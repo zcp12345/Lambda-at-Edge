@@ -48,8 +48,7 @@ Resources:
                 !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
         PriceClass: PriceClass_All
         ViewerCertificate:
-          AcmCertificateArn: !GetParam
-                - cba
+          AcmCertificateArn: !GetArtifactAtt
                 - AWS-CF-Stack-Params.json
                 - AcmCertificateArn
           MinimumProtocolVersion: TLSv1.1_2016
