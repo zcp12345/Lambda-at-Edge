@@ -5,9 +5,9 @@ Description: >-
   (with EdgeServices)
 Parameters:
   FQDN:
-    Type: String
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: FQDN
     Description: FQDN of website.
-    Default: ptylr.com
   AcmCertificateArn:
     Type: AWS::SSM::Parameter::Value<String>
     Default: AcmCertificateArn
@@ -18,7 +18,7 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - !GetParam 'cba,AWS-CF-Stack-Params.json,FQDN'
+          - !Ref FQDN
         DefaultCacheBehavior:
           Compress: true
           ForwardedValues:
@@ -54,7 +54,7 @@ Resources:
           SslSupportMethod: sni-only
       Tags:
         - Key: Domain
-          Value: !GetParam 'cba,AWS-CF-Stack-Params.json,FQDN'
+          Value: !Ref FQDN
   CloudFrontOriginAccessIdentity:
     Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
     Properties:
@@ -70,7 +70,7 @@ Resources:
               SSEAlgorithm: AES256
       Tags:
         - Key: Domain
-          Value: !GetParam 'cba,AWS-CF-Stack-Params.json,FQDN'
+          Value: !Ref FQDN
   S3BucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
     Properties:
@@ -107,7 +107,7 @@ Resources:
       Runtime: nodejs10.x
       Tags:
         - Key: Domain
-          Value: !GetParam 'cba,AWS-CF-Stack-Params.json,FQDN'
+          Value: !Ref FQDN
   OriginRequestLambdaFunctionVersion:
     Type: 'AWS::Lambda::Version'
     Properties:
@@ -125,7 +125,7 @@ Resources:
       Runtime: nodejs10.x
       Tags:
         - Key: Domain
-          Value: !GetParam 'cba,AWS-CF-Stack-Params.json,FQDN'
+          Value: !Ref FQDN
   OriginResponseLambdaFunctionVersion:
     Type: 'AWS::Lambda::Version'
     Properties:
