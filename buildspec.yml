@@ -2,6 +2,8 @@ version: 0.2
 
 phases:
  install:
+  runtime-versions:
+   docker: 18
   commands:
    - aws cloudformation package --template-file CloudFormation/AWS-Serverless.yaml --s3-bucket bt-cdn-logs-dev --output-template-file AWS-Serverless-output.yaml
 artifacts:
