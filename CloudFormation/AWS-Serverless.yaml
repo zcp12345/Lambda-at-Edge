@@ -105,7 +105,7 @@ Resources:
       Role: !Sub '${LambdaFunctionExecutionRole.Arn}'
       Runtime: nodejs10.x
       Tags:
-          Domain: 'REF FQDN HERE'
+          Domain: !REF FQDN
   OriginRequestLambdaFunctionVersion:
     Type: 'AWS::Lambda::Version'
     Properties:
