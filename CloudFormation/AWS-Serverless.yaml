@@ -99,7 +99,7 @@ Resources:
     Properties:
       Description: >-
         EdgeServices - A Pair of Lambda@Edge Functions for Executing Common Operations on Request (see https://github.com/ptylr/Lambda-at-Edge/tree/master/EdgeServices)
-      CodeUri: ./EdgeServices/OriginRequest
+      CodeUri: EdgeServices/OriginRequest/
       Handler: handler.handler
       MemorySize: 128
       Role: !Sub '${LambdaFunctionExecutionRole.Arn}'
@@ -117,7 +117,7 @@ Resources:
     Properties:
       Description: >-
         EdgeServices - A Pair of Lambda@Edge Functions for Executing Common Operations on Request (see https://github.com/ptylr/Lambda-at-Edge/tree/master/EdgeServices)
-      CodeUri: ./EdgeServices/OriginResponse
+      CodeUri: EdgeServices/OriginResponse/
       Handler: handler.handler
       MemorySize: 128
       Role: !Sub '${LambdaFunctionExecutionRole.Arn}'
